@@ -1,0 +1,47 @@
+
+
+<div class="row">
+        <div class="col-md-12" *ngFor="let mobile of mobileArr">
+        <div class="card mobileCard">
+            <div class="card-body" [ngClass]="{'not-available' : !mobile.isAvailable}">
+                    <div class="row">
+                 <div class="col-md-4">
+                    <div class="imagecontainer">
+                        <img *ngIf="mobile.image; else noimg"
+                        src= {{mobile.image}}
+                        [alt]='mobile.name'
+                        [title]='mobile.name'>
+                    <ng-template #noimg>
+                   <p class="noimg">No Image Available !</p> 
+                    </ng-template>
+                    </div>
+                
+                </div>
+            <div class="col-md-6">
+<h4 class="d-flex justify-content-between">
+   <strong>{{mobile.name}} </strong> 
+    <small class="badge" [ngClass]="{
+    'badge-success' : mobile.rating > 4,
+'badge-warning' : mobile.rating < 4 && mobile.rating >= 3,
+'badge-danger': mobile.rating < 3
+}">
+{{mobile.rating}}</small></h4>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let feature of mobile.features">{{feature}}</li>
+</ul>
+            
+            </div>
+            <div class="col-md-2">
+                <del>{{(mobile.price + (mobile.price * .15)) | currency : 'INR'}}</del> <br>
+<strong>{{mobile.price | currency : 'INR'}}</strong><br>
+<strong class="text-danger" *ngIf="mobile.noOfItems < 10">
+    Only {{mobile.noOfItems}} Left!
+</strong>
+            </div>
+            </div>
+            </div>
+        
+           <strong class="text-danger unavailable" *ngIf="!mobile.isAvailable">Currently Unavailable</strong>
+        </div>
+    </div>
+</div>
